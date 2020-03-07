@@ -19,6 +19,7 @@
 '''
 
 import sys
+
 digit_string = sys.argv[1]
 sum_ = 0
 

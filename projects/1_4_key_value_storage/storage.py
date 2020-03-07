@@ -17,19 +17,19 @@ import argparse
 def storage_data_get():
     storage_path = os.path.join(tempfile.gettempdir(), 'storage.data')
     if os.path.exists(storage_path):
-        with open(storage_path, 'r') as f:
+        with open(storage_path, 'r', encoding='utf8') as f:
             json_data = json.load(f)
             return json_data
 
 
 def storage_data_put(data_dict):
     storage_path = os.path.join(tempfile.gettempdir(), 'storage.data')
-    with open(storage_path, 'w') as f:
+    with open(storage_path, 'w', encoding='utf8') as f:
         json.dump(data_dict, f)
 
 
 def val_add(k, v):
-    data = storage_data_get()
+    data = storage_data_get() or dict()
     if k in data:
         data[k].append(v)
     else:
@@ -39,7 +39,7 @@ def val_add(k, v):
 
 def val_get(k):
     data = storage_data_get()
-    if k in data:
+    if data is not None and k in data:
         print(*data[k], sep=', ')
         return data[k]
     else:

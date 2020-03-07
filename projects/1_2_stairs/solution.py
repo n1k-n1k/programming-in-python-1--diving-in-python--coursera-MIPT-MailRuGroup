@@ -15,6 +15,8 @@
 после вывода последней строки, содержащей ступени.
 '''
 
-n = int(input())
+import sys
+
+n = int(sys.argv[1])
 for i in range(n):
     print(' ' * (n - i - 1), '#' * (i + 1), sep='')

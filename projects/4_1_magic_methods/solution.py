@@ -21,17 +21,19 @@ class File:
         return self._path
 
     def __iter__(self):
-        with open(self._path, 'r', encoding='utf8') as f:
-            self._lines = f.readlines()
         return self
 
     def __next__(self):
-        try:
-            line = self._lines[self._curr]
-            self._curr += 1
-            return line
-        except IndexError:
-            raise StopIteration
+        with open(self._path, 'r', encoding='utf8') as f:
+            f.seek(self._curr)
+            line = f.readline()
+
+            if line:
+                self._curr = f.tell()
+                return line
+            else:
+                self._curr = 0
+                raise StopIteration
 
     def __add__(self, other):
         result_path = os.path.join(tempfile.gettempdir(), 'tmp.txt')
